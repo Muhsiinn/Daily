@@ -1,4 +1,4 @@
-# Simple things I use daily
+
  Quote saver
  * I'll add my quote 
  * If the quote is too hard to understand/process I'll add explanation on back side 
