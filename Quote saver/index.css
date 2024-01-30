@@ -1,0 +1,116 @@
+body {
+    font-family: 'JetBrains Mono', monospace;
+    margin: 20px;
+}
+
+h2 {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+#quoteInput {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+#addButton, #resetButton {
+    padding: 10px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#quotesList {
+    margin-top: 20px;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flip-card {
+    width: 340px;
+    height: 200px;
+    perspective: 1000px;
+    margin: 10px;
+}
+
+.flip-card-inner {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.flip-card-front {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.flip-card-back {
+    transform: rotateY(180deg);
+    background-color: #1a1a1a;
+    color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.flip-card-back textarea {
+    width: 100%;
+    height: 80%;
+    resize: none;
+    border: none;
+    background-color: #1a1a1a;
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    border-radius: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.deleteButton {
+    cursor: pointer;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    background-color: #1a1a1a;
+    color: white;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 0.8rem;
+}
+
+.deleteButton:hover {
+    background-color: #444;
+}

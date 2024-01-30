@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+
+    <title>Quotes</title>
+</head>
+<body>
+
+    <h2>Quotes Saver</h2>
+
+    <input type="text" id="quoteInput" placeholder="Type in here" onkeypress="handleKeyPress(event)">
+    <button id="addButton" onclick="addQuote()">Add</button>
+    
+
+    <ul id="quotesList"></ul>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            loadQuotes();
+        });
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                addQuote();
+            }
+        }
+        
+
+        function addQuote() {
+            var quoteInput = document.getElementById('quoteInput');
+            var quote = quoteInput.value;
+
+            if (quote.trim() !== '') {
+                var quotesList = document.getElementById('quotesList');
+                var listItem = document.createElement('li');
+                listItem.className = 'flip-card';
+
+                // Create the flip card inner
+                var flipCardInner = document.createElement('div');
+                flipCardInner.className = 'flip-card-inner';
+
+                // Create the flip card front
+                var flipCardFront = document.createElement('div');
+                flipCardFront.className = 'flip-card-front';
+                flipCardFront.textContent = quote;
+
+                // Create the flip card back
+                var flipCardBack = document.createElement('div');
+                flipCardBack.className = 'flip-card-back';
+                flipCardBack.innerHTML = '<textarea placeholder="Additional Info"></textarea>';
+
+                // Create delete button
+                var deleteButton = createDeleteButton(listItem);
+                // Add everything to the DOM
+                flipCardInner.appendChild(flipCardFront);
+                flipCardInner.appendChild(flipCardBack);
+                listItem.appendChild(flipCardInner);
+                listItem.appendChild(deleteButton);
+                quotesList.appendChild(listItem);
+                quoteInput.value = '';
+
+                // Save quotes to local storage
+                saveQuotes();
+            }
+        }
+      
+
+        function createDeleteButton(listItem) {
+            var deleteButton = document.createElement('button');
+            deleteButton.className = 'deleteButton';
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = function () {
+                removeQuote(listItem);
+            };
+            return deleteButton;
+        }
+
+        function removeQuote(quoteElement) {
+            var quotesList = document.getElementById('quotesList');
+            quotesList.removeChild(quoteElement);
+
+            // Save quotes to local storage after removal
+            saveQuotes();
+        }
+
+        function resetLocalStorage() {
+            localStorage.removeItem('favoriteQuotes');
+            document.getElementById('quotesList').innerHTML = '';
+        }
+
+        function loadQuotes() {
+            var quotesList = document.getElementById('quotesList');
+            var storedQuotes = localStorage.getItem('favoriteQuotes');
+
+            if (storedQuotes) {
+                var quotes = JSON.parse(storedQuotes);
+
+                for (var i = 0; i < quotes.length; i++) {
+                    var listItem = document.createElement('li');
+                    listItem.className = 'flip-card';
+
+                    // Create the flip card inner
+                    var flipCardInner = document.createElement('div');
+                    flipCardInner.className = 'flip-card-inner';
+
+                    // Create the flip card front
+                    var flipCardFront = document.createElement('div');
+                    flipCardFront.className = 'flip-card-front';
+                    flipCardFront.textContent = quotes[i];
+
+                    // Create the flip card back
+                    var flipCardBack = document.createElement('div');
+                    flipCardBack.className = 'flip-card-back';
+                    flipCardBack.innerHTML = '<textarea placeholder="Additional Info"></textarea>';
+
+                    // Create delete button
+                    var deleteButton = createDeleteButton(listItem);
+
+                    // Add everything to the DOM
+                    flipCardInner.appendChild(flipCardFront);
+                    flipCardInner.appendChild(flipCardBack);
+                    listItem.appendChild(flipCardInner);
+                    listItem.appendChild(deleteButton);
+                    quotesList.appendChild(listItem);
+                }
+            }
+        }
+
+        function saveQuotes() {
+            var quotesList = document.getElementById('quotesList');
+            var quotes = [];
+
+            // Retrieve quotes from the flip cards
+            var flipCards = quotesList.getElementsByClassName('flip-card-front');
+            for (var i = 0; i < flipCards.length; i++) {
+                quotes.push(flipCards[i].textContent.trim());
+            }
+
+            localStorage.setItem('favoriteQuotes', JSON.stringify(quotes));
+        }
+    </script>
+
+</body>
+</html>
