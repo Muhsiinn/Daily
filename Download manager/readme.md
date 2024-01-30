@@ -38,11 +38,12 @@ Open a terminal or command prompt and run the following command to install PyIns
 
 ```bash
 pip install pyinstaller
-
+```
 Step 2: Convert the Python Script to an Executable
+```bash
 
 ~pyinstaller --onefile your_script.py
-
+```
 
 Find the executable in the dist directory.
 
